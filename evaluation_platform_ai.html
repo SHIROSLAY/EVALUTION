@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>منصة تقييم مهارات موظفي قسم المؤتمرات</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
+        h1 { text-align: center; }
+        .skill { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type=range] { width: 100%; }
+        .result { background: #fff; padding: 20px; margin-top: 30px; border: 1px solid #ccc; }
+        .recommendation { margin-top: 10px; }
+        button { padding: 10px 20px; }
+    </style>
+</head>
+<body>
+    <h1>منصة تقييم مهارات موظفي قسم المؤتمرات<br>Employee Skills Evaluation Platform</h1>
+
+    <form id="evaluationForm">
+        <div class="skill">
+            <label>1. خدمة العملاء - Customer Service</label>
+            <input type="range" name="Customer Service" min="1" max="5" value="3">
+        </div>
+        <div class="skill">
+            <label>2. القيادة - Leadership</label>
+            <input type="range" name="Leadership" min="1" max="5" value="3">
+        </div>
+        <div class="skill">
+            <label>3. العمل الجماعي - Teamwork</label>
+            <input type="range" name="Teamwork" min="1" max="5" value="3">
+        </div>
+        <div class="skill">
+            <label>4. مهارات تقنية - Technical Skills</label>
+            <input type="range" name="Technical Skills" min="1" max="5" value="3">
+        </div>
+        <div class="skill">
+            <label>5. مهارات التواصل - Communication Skills</label>
+            <input type="range" name="Communication Skills" min="1" max="5" value="3">
+        </div>
+        <div class="skill">
+            <label>6. حل المشكلات - Problem Solving</label>
+            <input type="range" name="Problem Solving" min="1" max="5" value="3">
+        </div>
+        <div class="skill">
+            <label>7. التنظيم - Organization</label>
+            <input type="range" name="Organization" min="1" max="5" value="3">
+        </div>
+        <div class="skill">
+            <label>8. إدارة الوقت - Time Management</label>
+            <input type="range" name="Time Management" min="1" max="5" value="3">
+        </div>
+        <div class="skill">
+            <label>9. إدارة الضغوط - Stress Management</label>
+            <input type="range" name="Stress Management" min="1" max="5" value="3">
+        </div>
+        <div class="skill">
+            <label>10. الإبداع - Creativity</label>
+            <input type="range" name="Creativity" min="1" max="5" value="3">
+        </div>
+
+        <button type="button" onclick="calculateResults()">احسب النتيجة - Calculate Results</button>
+    </form>
+
+    <div class="result" id="result" style="display:none;"></div>
+
+    <script>
+        const recommendations = {
+            "Customer Service": "ننصحك بدورة مهارات خدمة العملاء: <a href='https://doroob.sa/ar/courses/10883' target='_blank'>اضغط هنا</a>",
+            "Leadership": "ننصحك بدورة القيادة الفعالة: <a href='https://doroob.sa/ar/courses/11347' target='_blank'>اضغط هنا</a>",
+            "Teamwork": "ننصحك بدورة العمل الجماعي: <a href='https://doroob.sa/ar/courses/10901' target='_blank'>اضغط هنا</a>",
+            "Technical Skills": "ننصحك بدورة المهارات التقنية: <a href='https://doroob.sa/ar/courses/10884' target='_blank'>اضغط هنا</a>",
+            "Communication Skills": "ننصحك بدورة مهارات التواصل: <a href='https://doroob.sa/ar/courses/10880' target='_blank'>اضغط هنا</a>",
+            "Problem Solving": "ننصحك بدورة التفكير النقدي وحل المشكلات: <a href='https://doroob.sa/ar/courses/10880' target='_blank'>اضغط هنا</a>",
+            "Organization": "ننصحك بدورة إدارة المهام وتنظيم العمل: <a href='https://doroob.sa/ar/courses/10885' target='_blank'>اضغط هنا</a>",
+            "Time Management": "ننصحك بدورة إدارة الوقت: <a href='https://doroob.sa/ar/courses/10886' target='_blank'>اضغط هنا</a>",
+            "Stress Management": "ننصحك بدورة إدارة الضغوط: <a href='https://doroob.sa/ar/courses/10887' target='_blank'>اضغط هنا</a>",
+            "Creativity": "ننصحك بدورة الإبداع والتفكير الابتكاري: <a href='https://doroob.sa/ar/courses/10888' target='_blank'>اضغط هنا</a>"
+        };
+
+        function calculateResults() {
+            const form = document.getElementById('evaluationForm');
+            const data = new FormData(form);
+            let lowSkills = [];
+            let output = "<h2>نتائجك - Your Results</h2><ul>";
+            for (let [skill, value] of data.entries()) {
+                output += `<li>${skill}: ${value}/5</li>`;
+                if (parseInt(value) < 3) {
+                    lowSkills.push(skill);
+                }
+            }
+            output += "</ul>";
+
+            if (lowSkills.length > 0) {
+                output += "<h3>نقاط تحتاج لتحسين - Areas for Improvement</h3><ul>";
+                lowSkills.forEach(skill => {
+                    output += `<li>${recommendations[skill]}</li>`;
+                });
+                output += "</ul>";
+            } else {
+                output += "<p>أداء ممتاز! لا توجد مهارات تحتاج تحسين كبير حاليًا.</p>";
+            }
+
+            document.getElementById('result').innerHTML = output;
+            document.getElementById('result').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
